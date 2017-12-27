@@ -16,7 +16,8 @@
     "upgrade": "yarn-upgrade-all",
     "build": "babel src -d dist -s",
     "build:watch": "yarn build -w",
-    "test": "rm -rf demo && mkdir demo && cd demo && node ../src/index.js init"
+    "test:init": "rm -rf demo && mkdir demo && cd demo && node ../src/index.js init",
+    "test:build": "cd demo && node ../src/index.js build"
   },
   "homepage": "https://github.com/mamljs/maml#readme",
   "repository": {

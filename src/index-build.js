@@ -1,4 +1,6 @@
 const program = require('commander')
+const path = require('path')
+const { exec } = require('child_process')
 
 const { buildPages } = require('./pages')
 
@@ -12,3 +14,6 @@ const input = program.input || '.'
 const output = program.output || 'dist'
 
 buildPages(input, output)
+
+// copy assets
+exec(`cp -r ${path.join(input, 'assets', '*')} ${output}`)

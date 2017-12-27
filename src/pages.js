@@ -4,6 +4,7 @@ const path = require('path')
 const yaml = require('js-yaml')
 const fs = require('fs')
 const nunjucks = require('nunjucks')
+const mkdirp = require('mkdirp')
 
 let pages = {}
 
@@ -44,8 +45,14 @@ class Page {
   }
 
   build () {
-    console.log('build page')
-    // todo: write to file system
+    const htmlFile = path.join(this.output, this.pathname, 'index.html')
+    mkdirp(path.dirname(htmlFile), err => {
+      if (err) {
+        throw err
+      }
+      const html = nunjucks.render(`${this.view}.html`, { page: this, pages: pages })
+      fs.writeFileSync(htmlFile, html)
+    })
   }
 }
 
@@ -75,7 +82,6 @@ exports.buildPages = (input, output) => {
   R.forEach(pathname => {
     pages[pathname] = new Page(input, output, pathname)
   }, pathnames)
-  // console.log(pages)
 
   R.pipe(
     R.values,

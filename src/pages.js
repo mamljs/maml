@@ -46,11 +46,11 @@ class Page {
 
   build () {
     const htmlFile = path.join(this.output, this.pathname, 'index.html')
+    const html = nunjucks.render(`${this.view}.html`, { page: this, pages: pages })
     mkdirp(path.dirname(htmlFile), err => {
       if (err) {
         throw err
       }
-      const html = nunjucks.render(`${this.view}.html`, { page: this, pages: pages })
       fs.writeFileSync(htmlFile, html)
     })
   }

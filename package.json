@@ -1,6 +1,6 @@
 {
   "name": "maml",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Static website generator taking markdown and yaml as input",
   "keywords": [
     "markdown",
@@ -10,12 +10,12 @@
   "author": "Tyler Long <tyler4long@gmail.com>",
   "license": "MIT",
   "bin": {
-    "maml": "src/index.js"
+    "maml": "src/maml.js"
   },
   "scripts": {
     "upgrade": "yarn-upgrade-all",
-    "test:init": "rm -rf demo && mkdir demo && cd demo && node ../src/index.js init",
-    "test:build": "cd demo && node ../src/index.js build"
+    "test:init": "rm -rf demo && mkdir demo && cd demo && node ../src/maml.js init",
+    "test:build": "cd demo && node ../src/maml.js build"
   },
   "homepage": "https://github.com/mamljs/maml#readme",
   "repository": {

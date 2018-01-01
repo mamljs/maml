@@ -3,6 +3,7 @@ const path = require('path')
 const { exec } = require('child_process')
 const fs = require('fs')
 const Rx = require('rxjs/Rx')
+const chalk = require('chalk')
 
 const { buildPages } = require('./pages')
 
@@ -17,11 +18,11 @@ const input = program.input || '.'
 const output = program.output || 'dist'
 
 const build = () => {
-  console.log('building')
+  console.log(chalk.blue(`${new Date()} building`))
   buildPages(input, output)
   // copy assets
   exec(`cp -r ${path.join(input, 'assets', '*')} ${output}`)
-  console.log('done')
+  console.log(chalk.green(`${new Date()} done`))
 }
 
 build()

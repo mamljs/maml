@@ -79,3 +79,5 @@ MIT
 
 
 ## Todo
+
+- debounce watch mode

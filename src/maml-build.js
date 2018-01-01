@@ -26,7 +26,7 @@ build()
 if (program.watch) { // watch mode
   const outputPath = fs.realpathSync(output)
   fs.watch(input, { recursive: true }, (eventType, filename) => {
-    const filePath = fs.realpathSync(filename)
+    const filePath = fs.realpathSync(path.join(input, filename))
     if (!filePath.startsWith(outputPath)) {
       build()
     }

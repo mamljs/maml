@@ -52,7 +52,7 @@ npm install -g maml
 mkdir mysite
 cd mysite
 maml init
-maml build
+maml build --watch
 ```
 
 Commands above creates a website named `mysite`, and build output into `mysite/dist/`.

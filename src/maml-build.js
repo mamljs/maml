@@ -32,6 +32,9 @@ if (program.watch) { // watch mode
   subject.subscribe(() => { build() })
   const outputPath = fs.realpathSync(output)
   fs.watch(input, { recursive: true }, (eventType, filename) => {
+    if (!fs.existsSync(path.join(input, filename))) {
+      return // file deleted
+    }
     const filePath = fs.realpathSync(path.join(input, filename))
     if (!filePath.startsWith(outputPath)) {
       subject.next()

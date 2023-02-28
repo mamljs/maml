@@ -1,16 +1,13 @@
-const program = require('commander')
 const fs = require('fs')
 
 const {run} =require('./utils');
 
-program
-  .version(require('../package.json').version)
-  .option('-t, --template <template>', 'specify website template')
-  .parse(process.argv);
-
-const template = program.template || 'default';
-
-const init = () => {
+const init = (options) => {
+  if (fs.readdirSync('.').length > 0) {
+    console.error('Directory is non-empty');
+    return;
+  }
+  const {template} = options
   console.log(`Website initializing with template '${template}'`)
   run(`
     curl -L https://github.com/mamljs/maml-template-${template}/archive/master.zip -o master.zip
@@ -26,8 +23,4 @@ const init = () => {
   `);
 }
 
-if (fs.readdirSync('.').length === 0) {
-  init();
-} else {
-  console.error('Directory is non-empty')
-}
+module.exports = init;

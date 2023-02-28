@@ -2,10 +2,10 @@ const program = require('commander')
 const path = require('path')
 const { exec } = require('child_process')
 const fs = require('fs')
-const Rx = require('rxjs/Rx')
-const chalk = require('chalk')
+const {debounce} = require('lodash')
 
 const { buildPages } = require('./pages')
+const {logInfo, logSuccess} = require('./utils');
 
 program
   .version(require('../package.json').version)
@@ -18,18 +18,17 @@ const input = program.input || '.'
 const output = program.output || 'dist'
 
 const build = () => {
-  console.log(chalk.blue(`${new Date()} building`))
+  logInfo(`${new Date()} building`);
   buildPages(input, output)
   // copy assets
   exec(`cp -r ${path.join(input, 'assets', '*')} ${output}`)
-  console.log(chalk.green(`${new Date()} done`))
+  logSuccess(`${new Date()} done`);
 }
 
-build()
+build();
 
 if (program.watch) { // watch mode
-  const subject = new Rx.Subject().debounceTime(256)
-  subject.subscribe(() => { build() })
+  const debouncedBuild = debounce(build, 256);
   const outputPath = fs.realpathSync(output)
   fs.watch(input, { recursive: true }, (eventType, filename) => {
     if (!fs.existsSync(path.join(input, filename))) {
@@ -37,7 +36,7 @@ if (program.watch) { // watch mode
     }
     const filePath = fs.realpathSync(path.join(input, filename))
     if (!filePath.startsWith(outputPath)) {
-      subject.next()
+      debouncedBuild()
     }
   })
 }

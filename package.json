@@ -1,6 +1,6 @@
 {
   "name": "maml",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Static website generator taking markdown and yaml as input",
   "keywords": [
     "markdown",
@@ -22,17 +22,15 @@
     "type": "git",
     "url": "git+https://github.com/mamljs/maml.git"
   },
-  "devDependencies": {
-    "standard": "^10.0.3",
-    "yarn-upgrade-all": "^0.2.0"
-  },
   "dependencies": {
-    "chalk": "^2.3.0",
-    "commander": "^2.12.2",
-    "js-yaml": "^3.10.0",
-    "mkdirp": "^0.5.1",
-    "nunjucks": "^3.0.1",
-    "ramda": "^0.25.0",
-    "rxjs": "^5.5.6"
+    "commander": "^10.0.0",
+    "glob": "^9.0.1",
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21",
+    "nunjucks": "^3.2.3",
+    "ramda": "^0.28.0"
+  },
+  "devDependencies": {
+    "yarn-upgrade-all": "^0.7.2"
   }
 }

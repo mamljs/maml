@@ -29,4 +29,12 @@ const runOne = (command) => {
   });
 };
 
-module.exports = {run};
+const logInfo = (message) => {
+  console.log('\x1b[34m', '[Start]:', message, '\x1b[0m');
+};
+
+const logSuccess = (message) => {
+  console.log('\x1b[32m', '[Done]:', message, '\x1b[0m');
+};
+
+module.exports = {run, logInfo, logSuccess};

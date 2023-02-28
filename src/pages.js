@@ -4,7 +4,6 @@ const path = require('path')
 const yaml = require('js-yaml')
 const fs = require('fs')
 const nunjucks = require('nunjucks')
-const mkdirp = require('mkdirp')
 
 let pages = {}
 
@@ -18,10 +17,10 @@ class Page {
 
   _loadConfig () {
     this.markdown = fs.readFileSync(path.join(this.input, 'models', this.pathname, 'index.md'), 'utf8')
-    let config = yaml.safeLoad(fs.readFileSync(path.join(this.input, 'models', this.pathname, 'index.yml'), 'utf8'))
+    let config = yaml.load(fs.readFileSync(path.join(this.input, 'models', this.pathname, 'index.yml'), 'utf8'))
     const parentPage = this._parentPage()
     if (parentPage) {
-      config = R.merge(parentPage, config)
+      config = R.mergeRight(parentPage, config)
       delete config.pathname
       delete config.markdown
     }
@@ -47,19 +46,15 @@ class Page {
   build () {
     const htmlFile = path.join(this.output, this.pathname, 'index.html')
     const html = nunjucks.render(`${this.view}.html`, { page: this, pages: pages })
-    mkdirp(path.dirname(htmlFile), err => {
-      if (err) {
-        throw err
-      }
-      fs.writeFileSync(htmlFile, html)
-    })
+    fs.mkdirSync(path.dirname(htmlFile), { recursive: true });
+    fs.writeFileSync(htmlFile, html);
   }
 }
 
 exports.buildPages = (input, output) => {
   nunjucks.configure(path.join(input, 'views'), { autoescape: false })
 
-  const files = glob.sync(path.join(input, 'models/**/index.md'))
+  const files = glob.globSync(path.join(input, 'models/**/index.md'))
   const pathnames = R.pipe(
     R.map(
       R.pipe(

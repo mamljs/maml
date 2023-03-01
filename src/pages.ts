@@ -97,16 +97,4 @@ export const buildPages = async (input, output) => {
     )[page.action];
     action(page, pages);
   }
-
-  // R.pipe(
-  //   R.values,
-  //   R.forEach(async page => {
-  //     const action = (
-  //       await import(
-  //         path.resolve(input, 'controllers', page.controller + '.js')
-  //       )
-  //     )[page.action];
-  //     action(page, pages);
-  //   })
-  // )(pages);
 };

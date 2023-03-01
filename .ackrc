@@ -1,2 +1,4 @@
 --ignore-file=match:/^yarn\.lock$/
 --ignore-dir=demo
+--ignore-dir=lib
+--ignore-dir=node_modules

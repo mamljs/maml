@@ -1,6 +1,6 @@
 {
   "name": "maml",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Static website generator taking markdown and yaml as input",
   "keywords": [
     "markdown",
@@ -10,12 +10,12 @@
   "author": "Tyler Long <tyler4long@gmail.com>",
   "license": "MIT",
   "bin": {
-    "maml": "src/index.js"
+    "maml": "lib/index.js"
   },
   "scripts": {
-    "upgrade": "yarn-upgrade-all",
-    "test:init": "rm -rf demo && mkdir demo && cd demo && node ../src/index.js init",
-    "test:build": "cd demo && node ../src/index.js build"
+    "build": "tsc --outDir lib --project tsconfig.json",
+    "test:init": "rm -rf demo && mkdir demo && cd demo && node ../lib/index.js init",
+    "test:build": "cd demo && node ../lib/index.js build"
   },
   "homepage": "https://github.com/mamljs/maml#readme",
   "repository": {
@@ -31,6 +31,9 @@
     "ramda": "^0.28.0"
   },
   "devDependencies": {
-    "yarn-upgrade-all": "^0.7.2"
+    "gts": "^3.1.1",
+    "yarn-upgrade-all": "^0.7.2",
+    "typescript": "~4.7.0",
+    "@types/node": "^14.11.2"
   }
 }

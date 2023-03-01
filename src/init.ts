@@ -1,14 +1,14 @@
-const fs = require('fs')
+import fs from 'fs';
 
-const {run} =require('./utils');
+import {run} from './utils';
 
-const init = (options) => {
+const init = options => {
   if (fs.readdirSync('.').length > 0) {
     console.error('Directory is non-empty');
     return;
   }
-  const {template} = options
-  console.log(`Website initializing with template '${template}'`)
+  const {template} = options;
+  console.log(`Website initializing with template '${template}'`);
   run(`
     curl -L https://github.com/mamljs/maml-template-${template}/archive/master.zip -o master.zip
     unzip master.zip -d .
@@ -21,6 +21,6 @@ const init = (options) => {
     rm -rf maml-template-${template}-master
     yarn install
   `);
-}
+};
 
-module.exports = init;
+export default init;

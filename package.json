@@ -1,6 +1,6 @@
 {
   "name": "maml",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "Static website generator taking markdown and yaml as input",
   "keywords": [
     "markdown",

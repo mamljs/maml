@@ -3,10 +3,11 @@ import {program} from 'commander';
 
 import init from './init';
 import build from './build';
+import {version} from '../package.json';
 
 program
   .name('maml')
-  .version(require('../package.json').version)
+  .version(version)
   .description('Static website generator taking markdown and yaml as input.');
 
 program

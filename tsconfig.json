@@ -1,9 +1,6 @@
 {
   "compilerOptions": {
-    "esModuleInterop": true,
-    "module": "nodenext"
-  },
-  "include": [
-    "src/*.ts"
-  ]
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  }
 }

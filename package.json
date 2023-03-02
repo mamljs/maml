@@ -10,12 +10,11 @@
   "author": "Tyler Long <tyler4long@gmail.com>",
   "license": "MIT",
   "bin": {
-    "maml": "lib/index.js"
+    "maml": "src/index.ts"
   },
   "scripts": {
-    "build": "tsc --outDir lib --project tsconfig.json",
-    "test:init": "rm -rf demo && mkdir demo && cd demo && node ../lib/index.js init",
-    "test:build": "cd demo && node ../lib/index.js build"
+    "test:init": "rm -rf demo && mkdir demo && cd demo && ts-node ../src/index.ts init",
+    "test:build": "cd demo && ts-node ../src/index.ts build"
   },
   "homepage": "https://github.com/mamljs/maml#readme",
   "repository": {
@@ -24,7 +23,7 @@
   },
   "dependencies": {
     "commander": "^10.0.0",
-    "glob": "^9.1.0",
+    "glob": "^9.1.2",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
     "nunjucks": "^3.2.3",
@@ -33,6 +32,7 @@
   "devDependencies": {
     "@types/node": "^18.14.2",
     "gts": "^3.1.1",
+    "ts-node": "^10.9.1",
     "typescript": "^4.9.5",
     "yarn-upgrade-all": "^0.7.2"
   }

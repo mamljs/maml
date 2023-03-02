@@ -26,10 +26,10 @@
     "glob": "^9.1.2",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
-    "nunjucks": "^3.2.3",
-    "ramda": "^0.28.0"
+    "nunjucks": "^3.2.3"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.191",
     "@types/node": "^18.14.2",
     "gts": "^3.1.1",
     "ts-node": "^10.9.1",

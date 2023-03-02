@@ -76,3 +76,8 @@ MIT
 
 - [Tylingsoft - apps to boost your productivity](https://tylingsoft.com)
 - [maml's official website](http://mamljs.github.io/)
+
+
+## Todo
+
+Do not use CDN, use parcel to compile

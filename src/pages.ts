@@ -1,9 +1,9 @@
 import glob from 'glob';
-import R from 'ramda';
 import path from 'path';
 import yaml from 'js-yaml';
 import fs from 'fs';
 import nunjucks from 'nunjucks';
+import {merge, initial, tail, dropWhile, sortBy} from 'lodash';
 
 let pages = {};
 
@@ -34,27 +34,23 @@ class Page {
     );
     const parentPage = this._parentPage();
     if (parentPage) {
-      config = R.mergeRight(parentPage, config);
+      config = merge(JSON.parse(JSON.stringify(parentPage)), config);
       delete config.pathname;
       delete config.markdown;
     }
-    R.pipe(
-      R.keys,
-      R.forEach(key => {
-        this[key] = config[key];
-      })
-    )(config);
+    for (const key of Object.keys(config)) {
+      this[key] = config[key];
+    }
   }
 
   _parentPage() {
-    const tokens = R.pipe(R.split('/'), R.reject(R.isEmpty))(this.pathname);
-    if (R.isEmpty(tokens)) {
+    const tokens = this.pathname.split('/').filter(t => t !== '');
+    if (tokens.length === 0) {
       return undefined;
     }
-    const parentTokens = R.init(tokens);
-    const parentPath = R.isEmpty(parentTokens)
-      ? '/'
-      : `/${parentTokens.join('/')}/`;
+    const parentTokens = initial(tokens);
+    const parentPath =
+      parentTokens.length === 0 ? '/' : `/${parentTokens.join('/')}/`;
     return pages[parentPath];
   }
 
@@ -73,23 +69,17 @@ export const buildPages = async (input, output) => {
   nunjucks.configure(path.join(input, 'views'), {autoescape: false});
 
   const files = glob.globSync(path.join(input, 'models/**/index.md'));
-  const pathnames = R.pipe(
-    R.map(
-      R.pipe(
-        R.split('/'),
-        R.init,
-        R.dropWhile(item => item !== 'models'),
-        R.tail
-      )
-    ),
-    R.sortBy(item => item.length),
-    R.map(R.pipe(R.join('/'), item => (item === '' ? '/' : `/${item}/`)))
-  )(files);
+  const pathnames = sortBy(
+    files.map(f => tail(dropWhile(initial(f.split('/')), i => i !== 'models'))),
+    item => item.length
+  )
+    .map(items => items.join('/'))
+    .map(item => (item === '' ? '/' : `/${item}/`));
 
   pages = {};
-  R.forEach(pathname => {
+  for (const pathname of pathnames) {
     pages[pathname] = new Page(input, output, pathname);
-  }, pathnames);
+  }
 
   for (const page of Object.values<any>(pages)) {
     const action = (

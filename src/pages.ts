@@ -83,7 +83,7 @@ export const buildPages = async (input, output) => {
 
   for (const page of Object.values<any>(pages)) {
     const action = (
-      await import(path.resolve(input, 'controllers', page.controller + '.js'))
+      await import(path.resolve(input, 'controllers', page.controller))
     )[page.action];
     action(page, pages);
   }
